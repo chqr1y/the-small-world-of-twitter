@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/the-small-world-of-twitter/static/js/main.de492418.chunk.js",
-    "main.js.map": "/the-small-world-of-twitter/static/js/main.de492418.chunk.js.map",
+    "main.js": "/the-small-world-of-twitter/static/js/main.4a3313cb.chunk.js",
+    "main.js.map": "/the-small-world-of-twitter/static/js/main.4a3313cb.chunk.js.map",
     "runtime-main.js": "/the-small-world-of-twitter/static/js/runtime-main.63feb0fa.js",
     "runtime-main.js.map": "/the-small-world-of-twitter/static/js/runtime-main.63feb0fa.js.map",
     "static/js/2.7541d612.chunk.js": "/the-small-world-of-twitter/static/js/2.7541d612.chunk.js",
     "static/js/2.7541d612.chunk.js.map": "/the-small-world-of-twitter/static/js/2.7541d612.chunk.js.map",
     "index.html": "/the-small-world-of-twitter/index.html",
-    "precache-manifest.647269607721cbc222ea120c72340f0b.js": "/the-small-world-of-twitter/precache-manifest.647269607721cbc222ea120c72340f0b.js",
+    "precache-manifest.b050f72a96e9048daf2fc98cd5912da9.js": "/the-small-world-of-twitter/precache-manifest.b050f72a96e9048daf2fc98cd5912da9.js",
     "service-worker.js": "/the-small-world-of-twitter/service-worker.js",
     "static/js/2.7541d612.chunk.js.LICENSE.txt": "/the-small-world-of-twitter/static/js/2.7541d612.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.63feb0fa.js",
     "static/js/2.7541d612.chunk.js",
-    "static/js/main.de492418.chunk.js"
+    "static/js/main.4a3313cb.chunk.js"
   ]
 }

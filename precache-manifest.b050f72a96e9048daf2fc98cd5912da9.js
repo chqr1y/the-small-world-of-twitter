@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "00915fcf00f6071870864a3e6dd3e699",
+    "revision": "6d28c429a463f04d6f14bacec0ad9380",
     "url": "/the-small-world-of-twitter/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/the-small-world-of-twitter/static/js/2.7541d612.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fc7a62c01b385b7d82ca",
-    "url": "/the-small-world-of-twitter/static/js/main.de492418.chunk.js"
+    "revision": "241c948b228e978ce284",
+    "url": "/the-small-world-of-twitter/static/js/main.4a3313cb.chunk.js"
   },
   {
     "revision": "b3c3d8b78c2c70a2f79f",
