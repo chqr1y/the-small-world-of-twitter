@@ -7,7 +7,6 @@ const Map = ({ setTooltipContent }) => (
     style={{
       "width":"90%",
       "max-width":"1200px",
-      "display":"flex",
       "margin":"auto",
       "border-style":"solid",
     }}
