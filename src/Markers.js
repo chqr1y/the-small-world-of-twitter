@@ -1,22 +1,39 @@
 import React from "react";
 import { Marker } from "react-simple-maps";
 
-class Markers extends React.Component {
+class Circle extends React.Component {
+  static defaultProps = {
+    zoom: 1,
+  };
   render() {
+    const {zoom} = this.props;
     return (
-      this.props.markers.map(
+      <circle r={3 / zoom}
+              fill="#F00"
+              stroke="#fff"
+              strokeWidth={0.5 / zoom}
+      />
+    );
+  }
+}
+
+class Markers extends React.Component {
+  static defaultProps = {
+    zoom: 1,
+  }
+  render() {
+    const {markers, zoom, onMouse} = this.props;
+    return (
+      markers.map(
         ({name, latitude, longitude}, index) => (
           <Marker
             key={index}
             coordinates={[longitude, latitude]}
-            onMouseEnter={() => {
-              this.props.setTooltipContent(name);
-            }}
-            onMouseLeave={() => {
-              this.props.setTooltipContent("");
-            }}
+            onMouseEnter={() => {onMouse(name);}}
+            onMouseLeave={() => {onMouse("");}}
           >
-            <circle r={3} fill="#F00" stroke="#fff" strokeWidth={0.5} />
+            <Circle zoom={zoom}/>
+            />
           </Marker>
         )
       )

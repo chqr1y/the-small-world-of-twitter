@@ -1,95 +1,109 @@
 import React from "react";
+import { ZoomableGroup, ComposableMap } from "react-simple-maps";
+import ReactTooltip from "react-tooltip";
 
-import DrawMap from './DrawMap';
-import LegendMap from './LegendMap';
-import DataMap from './DataMap';
-
-
+import Countries from './Countries';
+import Markers from './Markers';
+import ControlPanel from './ControlPanel';
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCountry : {
-        isTwitterCountry: false,
-        index: null,
-        woeid: null,
-        name: null,
-      },
-      displayTowns: true,
-      mapToolTip: "",
+      tooltip: "",
+      position: {coordinates: [0, 0], zoom: 1},
+      displayMarkers: true,
     };
-    this.handleSelectCountry = this.handleSelectCountry.bind(this);
-    this.handleDisplayTowns = this.handleDisplayTowns.bind(this);
+    this.setPosition = this.setPosition.bind(this);
+    this.setTooltipContent = this.setTooltipContent.bind(this);
+    this.handleDisplayMarkers = this.handleDisplayMarkers.bind(this);
+    this.reset = this.reset.bind(this);
   }
-  handleSelectCountry(properties, index) {
-    if (this.state.selectedCountry.index === index) {
-      this.setState({
-        selectedCountry : {
-          isTwitterCountry: null,
+  setPosition(position) {
+    this.setState((state) => {
+      return {
+        position: {
+          ...state.position,
+          ...position,
+      }}
+    });
+  }
+  setTooltipContent(value) {
+    this.setState({tooltip: value});
+  }
+  handleDisplayMarkers() {
+    this.setState((state) => {
+      return {displayMarkers: !(state.displayMarkers)}
+    });
+  }
+  reset() {
+    this.setState({
+      position: {
+        coordinates: [0,0],
+        zoom: 1,
+      },
+    }, () => {
+      this.props.setTarget(
+        {
+          twitterTrendsAvailable: false,
           index:null,
           woeid:null,
           name: null,
-        },
-      });
-    }
-    else {
-      this.setState({
-        selectedCountry : {
-          isTwitterCountry: (properties.TW_WOEID !== -1),
-          index:index,
-          woeid:properties.TW_WOEID,
-          name: properties.NAME,
-        },
-      });
-    }
-  }
-
-  handleDisplayTowns() {
-    this.setState({
-      displayTowns: !(this.state.displayTowns),
+        }
+      );
     });
   }
   render() {
-    const markers = (() => {
-      if (this.state.displayTowns === false) {
-        return [];
-      }
-      else if (this.state.selectedCountry.index === null) {
-        return this.props.markers;
-      }
-      else {
-        return this.props.markers.filter(marker =>
-            marker.parentid === this.state.selectedCountry.woeid
-        );
-      }
-    })();
+    const {geoUrl, target, setTarget, markers} = this.props;
+    const {displayMarkers, tooltip} = this.state;
+    const {coordinates, zoom} = this.state.position;
     const style = {
-      "borderStyle": "solid",
-    };
+      transform: "translateZ(0)"
+    }
     return (
-      <div>
-        <div style={style}>
-          <DrawMap
-            geoUrl={this.props.geoUrl}
-            selectedCountry={this.state.selectedCountry}
-            handleClick={this.handleSelectCountry}
-            markers={markers}
-          />
-        </div>
-        <div style={style}>
-          <LegendMap
-            displayTowns={this.state.displayTowns}
-            handleDisplayTowns={this.handleDisplayTowns}
-          />
-        </div>
-        <div style={style}>
-          <DataMap
-            place={this.state.selectedCountry}
-          />
-        </div>
+      <div style={style}>
+        <ComposableMap data-tip="">
+          <ZoomableGroup
+            center={coordinates}
+            zoom={zoom}
+            onMoveEnd={this.setPosition}
+          >
+            <Countries
+              geoUrl={geoUrl}
+              target={target}
+              setTarget={setTarget}
+              onMouse={this.setTooltipContent}
+              setPosition={this.setPosition}
+            />
+            <Markers
+              zoom={zoom}
+              markers={displayMarkers ? markers : []}
+              onMouse={this.setTooltipContent}
+            />
+          </ZoomableGroup>
+        </ComposableMap>
+        <ReactTooltip>{tooltip}</ReactTooltip>
+        <ControlPanel
+          buttons={{
+            reset: {onClick: this.reset},
+            plus: {
+              onClick: () => {this.setPosition(
+                {zoom: zoom * 2}
+              )},
+            },
+            minus: {
+              onClick: () => {this.setPosition(
+                {zoom: zoom / 2}
+              )},
+            },
+            displayTowns: {
+              state: displayMarkers,
+              onClick: this.handleDisplayMarkers,
+            }
+          }}
+        />
       </div>
-    );
+      );
   }
 }
 
